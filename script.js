@@ -1,0 +1,49 @@
+// script.js
+
+const taskForm = document.getElementById('task-form');
+const taskInput = document.getElementById('task-input');
+const taskList = document.getElementById('task-list');
+
+// Load tasks from localStorage
+window.onload = () => {
+  const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+  tasks.forEach(task => addTaskToDOM(task));
+};
+
+taskForm.addEventListener('submit', function (e) {
+  e.preventDefault();
+  const task = taskInput.value.trim();
+  if (task !== '') {
+    addTaskToDOM(task);
+    saveTask(task);
+    taskInput.value = '';
+  }
+});
+
+function addTaskToDOM(task) {
+  const li = document.createElement('li');
+  li.textContent = task;
+
+  const deleteBtn = document.createElement('button');
+  deleteBtn.textContent = '❌';
+  deleteBtn.style.marginLeft = '10px';
+  deleteBtn.onclick = () => {
+    li.remove();
+    removeTask(task);
+  };
+
+  li.appendChild(deleteBtn);
+  taskList.appendChild(li);
+}
+
+function saveTask(task) {
+  const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+  tasks.push(task);
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+function removeTask(task) {
+  let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+  tasks = tasks.filter(t => t !== task);
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+}
