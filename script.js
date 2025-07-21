@@ -59,3 +59,12 @@ function updateTaskCount() {
     : `You have ${tasks.length} task${tasks.length > 1 ? 's' : ''}`;
   document.getElementById('task-count').textContent = countText;
 }
+
+// Clear All Tasks
+document.getElementById('clear-tasks').addEventListener('click', () => {
+  if (confirm("Are you sure you want to delete all tasks?")) {
+    localStorage.removeItem('tasks');
+    taskList.innerHTML = '';
+    updateTaskCount(); // ✅ Update task count to zero
+  }
+});
