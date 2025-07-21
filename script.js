@@ -8,6 +8,7 @@ const taskList = document.getElementById('task-list');
 window.onload = () => {
   const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
   tasks.forEach(task => addTaskToDOM(task));
+  updateTaskCount(); // ✅ Count on load
 };
 
 taskForm.addEventListener('submit', function (e) {
@@ -17,6 +18,7 @@ taskForm.addEventListener('submit', function (e) {
     addTaskToDOM(task);
     saveTask(task);
     taskInput.value = '';
+    updateTaskCount(); // ✅ Count on add
   }
 });
 
@@ -30,6 +32,7 @@ function addTaskToDOM(task) {
   deleteBtn.onclick = () => {
     li.remove();
     removeTask(task);
+    updateTaskCount(); // ✅ Count on delete
   };
 
   li.appendChild(deleteBtn);
@@ -47,3 +50,7 @@ function removeTask(task) {
   tasks = tasks.filter(t => t !== task);
   localStorage.setItem('tasks', JSON.stringify(tasks));
 }
+
+// ✅ Dynamic task count display
+function updateTaskCount() {
+  const tasks = JSON.parse(localStorage.getItem('tasks
