@@ -53,4 +53,9 @@ function removeTask(task) {
 
 // ✅ Dynamic task count display
 function updateTaskCount() {
-  const tasks = JSON.parse(localStorage.getItem('tasks
+  const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+  const countText = tasks.length === 0
+    ? "No tasks left 🎉"
+    : `You have ${tasks.length} task${tasks.length > 1 ? 's' : ''}`;
+  document.getElementById('task-count').textContent = countText;
+}
